@@ -1,9 +1,9 @@
 import sys
 import os
-import stat
-import shutil
 import subprocess
+import shutil
 
+# Название папки где будут храниться демоны
 DEMON_FOLDER = '/etc/systemd/system'
 
 def get_python(executable=None):
@@ -12,43 +12,23 @@ def get_python(executable=None):
 
     return shutil.which(executable)
 
-
-def make_demon_script(name_service, commands, add_cwd=False):
-
-    exec_content=["#!/bin/bash"]
-
-    if add_cwd:
-        exec_content.append("cd " + os.getcwd())
-
-    exec_content.extend(commands)
-    exec_content = map((lambda item: item + '\n'), exec_content)
-
-    # запишев в файл содержимое 
-    name_exec_file = name_service + os.extsep + 'sh'
-    with open(name_exec_file, mode='w', encoding='utf-8') as f:
-        f.writelines(exec_content)
-    
-    # дадим права на исполнение нашему файлу
-    st = os.stat(name_exec_file)
-    os.chmod(name_exec_file, st.st_mode | stat.S_IEXEC)
-
-    # возвращает имя исполняемого файла
-    return name_exec_file
-
-
 def make_service_file(name_service, executable, description=None):
+    """Создаёт файл сервиса"""
 
     if not description:
         description = f"My App Service: {name_service}"
 
     service_content = \
-f"""[Unit]
+f"""
+[Unit]
 Description={description}
+After=syslog.target
 After=network.target
 
 [Service]
 Type=simple
-ExecStart={DEMON_FOLDER}{os.sep}{executable}
+ExecStart={executable}
+WorkingDirectory={os.getcwd()}
 Restart=always
 
 [Install]
@@ -91,11 +71,14 @@ if __name__ == "__main__":
         if command in ('start', 'stop', 'enable', 'disable', 'restart', 'status'):
             os.system(f'systemctl {command} {name_service}')
         elif command == "remove":
-            print('remove files:',
-                 f'{DEMON_FOLDER}/{name_service + os.extsep + "sh"}',
-                 f'{DEMON_FOLDER}/{name_service + os.extsep + "service"}', sep='\n')
-            os.system(f'rm -f {DEMON_FOLDER}/{name_service + os.extsep + "service"}')
-            os.system(f'rm -f {DEMON_FOLDER}/{name_service + os.extsep + "sh"}')
+            trash = f"{DEMON_FOLDER}{os.sep}{name_service}{os.extsep}service"
+            print('remove files:', trash, sep="\n")
+            # Останавливаем сервис
+            os.system(f'systemctl stop {name_service}')
+            # Удаляем файл сервиса
+            os.remove(trash)
+            # говорим systemd увидеть изменения
+            os.system("systemctl daemon-reload")
         else:
             file_to_demon = args[0]
 
@@ -103,11 +86,12 @@ if __name__ == "__main__":
                 print(f'ФАЙЛА с именем: {os.path.abspath(file_to_demon)}\nНЕ существует или он не является файлом')
                 exit()
     
-            name_script_file = make_demon_script(name_service, [get_python()+' '+ file_to_demon], add_cwd=True)
-            name_service_file = make_service_file(name_service, name_script_file)
+            name_service_file = make_service_file(name_service, get_python()+' '+ file_to_demon)
 
             # перемещаем файлы в директорию где демоны
-            shutil.move(name_script_file, DEMON_FOLDER)
             shutil.move(name_service_file, DEMON_FOLDER)
+
+            # говорим systemd чтобы он проверил конфиги и увидел новый сервис
+            os.system("systemctl daemon-reload")
     else:
         print('Неправильное число аргументов')
