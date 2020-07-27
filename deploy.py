@@ -19,8 +19,7 @@ def make_service_file(name_service, executable, description=None):
     if not description:
         description = f"My App Service: {name_service}"
 
-    service_content = \
-f"""
+    service_content = f"""
 [Unit]
 Description={description}
 After=syslog.target
