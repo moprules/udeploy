@@ -1,4 +1,4 @@
-# deploy
+# udeploy
 Простой скрипт на питоне, который поможет развернуть ваше приложение.
 Данная утилита представляет собой обёртку над такой стандартной
 утилитой _systemd_ в *nix подобных системах.
@@ -20,7 +20,7 @@ user@server$ cd $YOUR_WORK_DIRECTORY
 
 И наберите простую комманду
 ```console
-user@server$ deploy bot.py
+user@server$ udeploy bot.py
 ```
 
 Данная комманда автоматом создаст service из вашего приложения, и переместит в нужную директорию,
@@ -32,7 +32,7 @@ user@server$ deploy bot.py
 ## Запустить демон
 Для этого опять же в папке проекта просто выполните:
 ```console
-user@server$ deploy start
+user@server$ udeploy start
 ```
 И не нужно указывать никакого названия демона. Программа сама автоматом определит имя папки
 и на основании этого запустит нужный процесс. Это комманда только один раз запустит ваше приложение
@@ -41,23 +41,23 @@ user@server$ deploy start
 
 ## Добавить в автозапуск
 ```console
-user@server$ deploy enable
+user@server$ udeploy enable
 ```
 Теперь при перезагрузке сервера, вместе со всеми программами будет стартовать и ваше приложение.
 
 ## Остановить демон
 ```console
-user@server$ deploy stop
+user@server$ udeploy stop
 ```
 
 ## Убрать из автозапуска демон
 ```console
-user@server$ deploy disable
+user@server$ udeploy disable
 ```
 
 ## Удалить демон
 ```console
-user@server$ deploy remove
+user@server$ udeploy remove
 ```
 Полезно, если вы ошиблись в параметрах при создании демона и не хотите захломлять сервер ненужными
 нерабочими демонами. Данная коммада удаляет service файлы демона и перезагружает systemd,
