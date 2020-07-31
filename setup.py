@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="udeploy",
-    version="0.0.2",
+    version="0.0.3",
     entry_points={
         'console_scripts': ['udeploy=udeploy:main'],
     },
