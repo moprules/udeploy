@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import sys
 import os
 import subprocess
@@ -58,8 +58,7 @@ def parse_args(args):
     return parser
 
 
-if __name__ == "__main__":
-
+def main():
     # имя сервиса - имя текущей директории проекта
     name_service = os.path.basename(os.getcwd())
     

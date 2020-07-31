@@ -5,7 +5,7 @@
 
 ## Установка 
 ```console
-user@server$ sudo ./install.sh
+user@server$ pip install udeploy
 ```
 
 # Использование
