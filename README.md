@@ -5,7 +5,7 @@
 
 ## Установка 
 ```console
-user@server$ pip install udeploy
+user@server$ pip install udeploy --upgrade
 ```
 
 # Использование
