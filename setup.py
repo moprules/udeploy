@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
-
+from udeploy import __version__
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
     name="udeploy",
-    version="0.0.3",
+    version=__version__,
     entry_points={
         'console_scripts': ['udeploy=udeploy:main'],
     },
