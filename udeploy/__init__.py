@@ -27,7 +27,8 @@ WantedBy=multi-user.target
 """
 
 # Вспомогательное сообщение для пользователя
-HELP_MESSAGE = """
+HELP_MESSAGE = f"""
+udeploy {__version__}
   --help        : Вывести подсказку
   -f <filename> : Сделать отдельный файл сервисом
   --django      : Сделать Django проект сервисом systemd
