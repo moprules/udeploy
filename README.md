@@ -5,7 +5,7 @@
 
 # Установка 
 ```console
-user@server$ pip install udeploy --upgrade
+pip install udeploy --upgrade
 ```
 
 # Использование
@@ -14,18 +14,18 @@ user@server$ pip install udeploy --upgrade
 Например у вас есть проект телеграм бота на python, где главная программа называется bot.py.
 Чтобы превратить ваше приложение в демон, перейдите в папку вашего проекта:
 ```console
-user@server$ cd $YOUR_WORK_DIRECTORY
+cd $YOUR_WORK_DIRECTORY
 ```
 
 И наберите простую комманду
 ```console
-user@server$ udeploy -f bot.py
+udeploy -f bot.py
 ```
 
 ИЛИ
 
 ```console
-user@server$ udeploy bot.py -f
+udeploy bot.py -f
 ```
 
 Данная комманда автоматом создаст service из вашего приложения, и переместит в нужную директорию,
@@ -36,7 +36,7 @@ user@server$ udeploy bot.py -f
 
 ## Превратить Django проект в демон
 ```console
-user@server$ udeploy --django
+udeploy --django
 ```
 
 Данная комманда просматривает директорию проекта и ищет там файл `manage.py`.  
@@ -49,7 +49,7 @@ user@server$ udeploy --django
 ## Запустить демон
 Для этого опять же в папке проекта просто выполните:
 ```console
-user@server$ udeploy start
+udeploy start
 ```
 И не нужно указывать никакого названия демона. Программа сама автоматом определит имя папки
 и на основании этого запустит нужный процесс. Это комманда только один раз запустит ваше приложение
@@ -58,23 +58,23 @@ user@server$ udeploy start
 
 ## Добавить в автозапуск
 ```console
-user@server$ udeploy enable
+udeploy enable
 ```
 Теперь при перезагрузке сервера, вместе со всеми программами будет стартовать и ваше приложение.
 
 ## Остановить демон
 ```console
-user@server$ udeploy stop
+udeploy stop
 ```
 
 ## Убрать демон из автозапуска
 ```console
-user@server$ udeploy disable
+udeploy disable
 ```
 
 ## Удалить демон
 ```console
-user@server$ udeploy remove
+udeploy remove
 ```
 Полезно, если вы ошиблись в параметрах при создании демона и не хотите захломлять сервер ненужными
 нерабочими демонами. Данная коммада удаляет service файлы демона и перезагружает systemd,
@@ -82,5 +82,5 @@ user@server$ udeploy remove
 
 ## Показать подсказку
 ```console
-user@server$ udeploy --help
+udeploy --help
 ```
